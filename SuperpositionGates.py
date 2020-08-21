@@ -37,7 +37,7 @@ def BellStateGenerationTwoQubits(quantumCircuit, firstQubit=0, secondQubit=1, sp
         quantumCircuit.cx(firstQubit, secondQubit)
 
 def ChooseEqualSuperposition(quantumCircuit, states):
-    desiredVector = np.zeros(2**quantumCircuit.n_qubits)
+    desiredVector = np.zeros(2**quantumCircuit.num_qubits)
     flag = 1
     for k in states:
         if 0 <= k <= 11:
@@ -60,18 +60,18 @@ def ChooseEqualSuperpositionRandom(quantumCircuit):
             
 def Hadamard(quantumCircuit, listOfQubits):
     for k in listOfQubits:
-        if 0 <= k <= quantumCircuit.n_qubits:
+        if 0 <= k <= quantumCircuit.num_qubits:
             quantumCircuit.h(k)
             
 def RandomRotation(quantumCircuit):
-    for k in range(quantumCircuit.n_qubits):
-        quantumCircuit.u3(q=k, theta = np.random.random()*2*np.pi, phi = np.random.random()*np.pi, lam = np.random.random()*np.pi)
+    for k in range(quantumCircuit.num_qubits):
+        quantumCircuit.u3(qubit=k, theta = np.random.random()*2*np.pi, phi = np.random.random()*np.pi, lam = np.random.random()*np.pi)
         
 def __multiplecz(quantumCircuit, target, initialLength):
     quantumCircuit.ccx(0,1, initialLength)
     for k in range(2, initialLength-1):
         quantumCircuit.ccx(k, initialLength+k-2, initialLength+k-1)
-    quantumCircuit.cz(quantumCircuit.n_qubits-1, initialLength-1)
+    quantumCircuit.cz(quantumCircuit.num_qubits-1, initialLength-1)
     for k in reversed(range(2, initialLength-1)):
         quantumCircuit.ccx(k, initialLength+k-2, initialLength+k-1)
     quantumCircuit.ccx(0,1, initialLength)
